@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConnectionModule } from './interfaces/controllers/controller';
 
 @Module({
-  imports: [],
+  imports: [ConnectionModule],
   controllers: [],
   providers: [],
 })
