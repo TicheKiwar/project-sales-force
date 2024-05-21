@@ -1,0 +1,13 @@
+modules/
+Organiza el código relacionado por dominio funcional.
+//Generar con nest g res -nombre-
+user/: Módulo de usuario.
+user.module.ts
+application/services/user.service.ts
+domain/entities/user.entity.ts
+domain/repositories/user.repository.ts
+domain/services/user.domain-service.ts
+infrastructure/repositories/user.repository.impl.ts
+interfaces/controllers/user.controller.ts
+interfaces/dto/create-user.dto.ts
+interfaces/dto/update-user.dto.ts
