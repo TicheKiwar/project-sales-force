@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prettier": "prettier --write \"src/**/*.{js,ts,tsx,jsx,json,md}\"",
-    "db": "rimraf ./src/domain/entity && typeorm-model-generator -h aws-0-us-east-1.pooler.supabase.com -d postgres -p 5432 -u postgres.lmfjtyfjlocijyanxwdt -x PatronesProyecto5 -e postgres -o ./src/entities --noConfig true --ce pascal --cp camel --cf entity"
+    "db": "rimraf ./src/domain/entity && typeorm-model-generator -h aws-0-us-east-1.pooler.supabase.com -d postgres -p 5432 -u postgres.lmfjtyfjlocijyanxwdt -x PatronesProyecto5 -e postgres -o ./src/domain/entity --noConfig true --ce pascal --cp camel"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
