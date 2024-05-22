@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConnectionModule } from './interfaces/controllers/controller';
 import { UserModule } from './modules/user/user.module';
-import { UserModule } from './modules/user/user.module';
+import { ConnectionModule } from './infrastructure/orm/typeorm.config';
 
 @Module({
   imports: [ConnectionModule, UserModule],
