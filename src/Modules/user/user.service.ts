@@ -5,6 +5,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from 'src/entity/Users.entity';
 
+export interface userFineOne{
+  id?:number,
+  username?:string
+}
+
 @Injectable()
 export class UserService {
 
@@ -37,4 +42,16 @@ export class UserService {
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
+
+  async findOneUser(data:userFineOne){
+    return await this.userRepository
+            .createQueryBuilder("user")
+            .where({username:data.username})
+            .addSelect('user.password')
+            .getOne()
+    
+    
+    //.findOneBy({ username })
+  }
+
 }
