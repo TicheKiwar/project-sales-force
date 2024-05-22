@@ -2,29 +2,30 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from 'src/domain/entity/Users';
-import { Orders } from 'src/domain/entity/Orders';
-import { Roles } from 'src/domain/entity/Roles';
-import { Customers } from 'src/domain/entity/Customers';
-import { Persons } from 'src/domain/entity/Persons';
-import { OrdersDetails } from 'src/domain/entity/OrdersDetails';
-import { Categories } from 'src/domain/entity/Categories';
-import { Products } from 'src/domain/entity/Products';
+import { Users } from 'src/entity/Users.entity';
+import { Orders } from 'src/entity/Orders.entity';
+import { Roles } from 'src/entity/Roles.entity';
+import { Customers } from 'src/entity/Customers.entity';
+import { Categories } from 'src/entity/Categories.entity';
+import { Persons } from 'src/entity/Persons.entity';
+import { Products } from 'src/entity/Products.entity';
+import { OrdersDetails } from 'src/entity/OrdersDetails.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Users,
+      Roles,/*
       Orders,
-      Roles,
       Customers,
-      Persons,
-      OrdersDetails,
       Categories,
+      Persons,
       Products,
+      OrdersDetails,*/
     ]),
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
