@@ -12,45 +12,41 @@ import {
 import { Orders } from './Orders.entity';
 import { Roles } from './Roles.entity';
 import { hash } from 'bcryptjs';
+import { Persons } from './Persons.entity';
 
-//@Index("users_pkey", ["userId"], { unique: true })
-@Entity('users', { schema: 'public' })
+@Index("users_pkey", ["userId"], { unique: true })
+@Entity("users", { schema: "public" })
 export class Users {
-  @PrimaryGeneratedColumn({ type: 'integer', name: 'user_id' })
+  @PrimaryGeneratedColumn({ type: "integer", name: "user_id" })
   userId: number;
 
-  @Column('character varying', { name: 'username', length: 50 })
+  @Column("character varying", { name: "username", length: 50 })
   username: string;
 
-  @Column('character varying', { name: 'password', length: 100, select: false })
+  @Column("character varying", { name: "password", length: 100 })
   password: string;
 
-  @Column('character varying', { name: 'email', length: 100 })
+  @Column("character varying", { name: "email", length: 100 })
   email: string;
 
-  @Column('timestamp without time zone', { name: 'register_date' })
+  @Column("timestamp without time zone", { name: "register_date" })
   registerDate: Date;
 
-  @Column('boolean', {
-    name: 'deleted_status',
+  @Column("boolean", {
+    name: "deleted_status",
     nullable: true,
-    default: () => 'false',
+    default: () => "false",
   })
   deletedStatus: boolean | null;
 
   @OneToMany(() => Orders, (orders) => orders.employee)
   orders: Orders[];
 
-  @ManyToOne(() => Roles, (roles) => roles.users)
-  @JoinColumn([{ name: 'role', referencedColumnName: 'roleId' }])
-  role: Roles;
+  @ManyToOne(() => Persons, (persons) => persons.users)
+  @JoinColumn([{ name: "person_id", referencedColumnName: "personId" }])
+  person: Persons;
 
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPassword() {
-    if (!this.password) {
-      return;
-    }
-    this.password = await hash(this.password,10);
-  }
+  @ManyToOne(() => Roles, (roles) => roles.users)
+  @JoinColumn([{ name: "role", referencedColumnName: "roleId" }])
+  role: Roles;
 }

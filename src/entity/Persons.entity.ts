@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Customers } from "./Customers.entity";
+import { Users } from "./Users.entity";
 
 //@Index("persons_pkey", ["personId"], { unique: true })
 @Entity("persons", { schema: "public" })
@@ -34,4 +35,7 @@ export class Persons {
 
   @OneToMany(() => Customers, (customers) => customers.person)
   customers: Customers[];
+
+  @OneToMany(() => Users, (users) => users.person)
+  users: Users[];
 }
