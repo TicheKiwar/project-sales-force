@@ -3,6 +3,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConnectionModule } from './app.conection';
 import { ConfigModule } from '@nestjs/config';
+import { RolesModule } from './modules/roles/roles.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     ConnectionModule,
     AuthModule,
     UserModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],

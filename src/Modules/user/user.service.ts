@@ -24,13 +24,15 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.userRepository.find();
+    return await this.userRepository.find({ relations: ['role'] });
 
   }
 
   async getOne(userId: number, userEntity?: Users) {
     const user = await this.userRepository.findOne({
       where: { userId: userId },
+      
+      relations: ['role'],
     });
 
     if (!user || (userEntity && userEntity.userId !== user.userId)) {
@@ -42,24 +44,19 @@ export class UserService {
 
   async findOne(username: string) {
     const user = 
-    await this.userRepository.findOneBy({username});
+    await this.userRepository.findOne({
+      where: { username },
+      relations: ['role'],
+    });
     if (!user) throw new NotFoundException("User does not exists");
     return user;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
-
+    }
   async findOneUser(data:userFineOne){
     return await this.userRepository
             .createQueryBuilder("user")
             .where({username:data.username})
             .addSelect('user.password')
+            .leftJoinAndSelect('user.role', 'role')
             .getOne()
     
     

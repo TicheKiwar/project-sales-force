@@ -27,7 +27,7 @@ constructor(
     
     login(user:Users){
         const {userId,...rest} = user;
-        const payload = {sub:userId};
+        const payload = {sub:userId,username:user.username,role:user.role.role};
         return {
             user,
             accessToken:this.jwt.sign(payload)

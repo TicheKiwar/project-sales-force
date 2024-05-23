@@ -3,9 +3,9 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { User } from 'src/common/decorator/user.decorator';
 import { Users } from 'src/entity/Users.entity';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { UserService } from 'src/modules/user/user.service';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './infrastructure/jwt.strategy';
+import { Roles } from 'src/common/decorator/roles.decorator';
+import { RolesGuard } from './guards/role-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +21,7 @@ export class AuthController {
     };
   }
   @UseGuards(LocalAuthGuard)
-  @Post('refresh')
+  @Get('refresh')
   refresh(@User() user: Users) {
     const data = this.authService.login(user);
     return {
@@ -29,11 +29,13 @@ export class AuthController {
       data,
     };
   }
-  @UseGuards(JwtAuthGuard)
+  @Roles('administrador')
   @Get('profile')
+  @UseGuards(JwtAuthGuard,RolesGuard)
   profile(@User() user: Users) {
     return {
       message: 'Petición correcta',
+      mes:user.role.role,
       user,
     };
   }
