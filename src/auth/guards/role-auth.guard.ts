@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Logger } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException,  } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from 'src/common/decorator/roles.decorator';
 import { UserService } from 'src/modules/user/user.service';
@@ -30,9 +30,6 @@ export class RolesGuard implements CanActivate {
       const userEntity = await this.userService.findOne(user.username);
       user.role = userEntity.role;
     }
-    
-  const hasRole = requiredRoles.includes(user.role.role);
-    Logger.log(`User role: ${user.role.role}, Required roles: ${requiredRoles}, Has role: ${hasRole}`);
 
     return requiredRoles.includes(user.role.role);
   }

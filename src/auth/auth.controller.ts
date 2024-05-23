@@ -29,13 +29,12 @@ export class AuthController {
       data,
     };
   }
-  @Roles('administrador')
+  @Roles('user')
   @Get('profile')
   @UseGuards(JwtAuthGuard,RolesGuard)
   profile(@User() user: Users) {
     return {
       message: 'Petición correcta',
-      mes:user.role.role,
       user,
     };
   }
