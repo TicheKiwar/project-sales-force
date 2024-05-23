@@ -3,7 +3,6 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,

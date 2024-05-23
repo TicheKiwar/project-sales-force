@@ -28,6 +28,18 @@ export class UserService {
 
   }
 
+  async getOne(userId: number, userEntity?: Users) {
+    const user = await this.userRepository.findOne({
+      where: { userId: userId },
+    });
+
+    if (!user || (userEntity && userEntity.userId !== user.userId)) {
+      throw new NotFoundException('User does not exist or unauthorized');
+    }
+
+    return user;
+  }
+
   async findOne(username: string) {
     const user = 
     await this.userRepository.findOneBy({username});
