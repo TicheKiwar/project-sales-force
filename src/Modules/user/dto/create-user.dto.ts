@@ -7,14 +7,14 @@ import { Roles } from "src/entity/Roles.entity";
 
 export class CreateUserDto {
   @IsString()
-  @Length(4, 50)
+  @Length(4, 50, { message: 'El nombre de usuario no es válido' })
   username: string;
 
   @IsString()
-  @Length(4, 100)
+  @Length(4, 100, { message: 'La contraseña no es válida' })
   password: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'El email proporcionado no es válido' })
   @Length(4, 100)
   email: string;
 

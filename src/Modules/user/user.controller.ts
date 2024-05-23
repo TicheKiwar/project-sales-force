@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { validate } from 'class-validator';
 
 @Controller('user')
 export class UserController {
@@ -17,15 +28,38 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':username')
-  findOne(@Param('username') username: string) {
-    return this.userService.findOne(username);
+  @Get(':username/:password')
+  findOne(
+    @Param('username') username: string,
+    @Param('password') password: string,
+  ) {
+    return this.userService.findOne(username, password);
   }
 
-  @Patch(':username')
-  update(@Param('username') username: string, @Body() updateUserDto: UpdateUserDto) {
-    const data = this.userService.updateUser(username, updateUserDto);
-    return {message: 'Usuario editado con exito'}
+  @Patch(':username/:password')
+  async update(
+    @Param('username') username: string,
+    @Param('password') password: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    try {
+      const errorsValidation = await validate(updateUserDto);
+      if (errorsValidation.length > 0) {
+        const errorMessages = errorsValidation.map(error => Object.values(error.constraints)).join(', ');
+        throw new BadRequestException(`Error de validación: ${errorMessages}`);
+      }
+      const result = await this.userService.updateUser(
+        username,
+        password,
+        updateUserDto,
+      );
+      return { message: 'Usuario editado con éxito' };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return { message: 'El usuario no existe' };
+      }
+      throw error;
+    }
   }
 
   @Delete(':id')

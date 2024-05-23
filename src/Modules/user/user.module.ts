@@ -15,11 +15,11 @@ import { OrdersDetails } from 'src/entity/OrdersDetails.entity';
   imports: [
     TypeOrmModule.forFeature([
       Users,
-      Roles,/*
+      Roles,
+      Persons,/*
       Orders,
       Customers,
       Categories,
-      Persons,
       Products,
       OrdersDetails,*/
     ]),
