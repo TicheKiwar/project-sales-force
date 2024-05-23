@@ -1,8 +1,18 @@
 import { Module } from '@nestjs/common';
-import { ConnectionModule } from './interfaces/controllers/controller';
+import { UserModule } from './modules/user/user.module';
+import { ConnectionModule } from './app.conection';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ConnectionModule],
+  imports: [ConnectionModule,
+    ConfigModule.forRoot({
+      isGlobal:true,
+      envFilePath:',env',
+    }),
+    UserModule,
+    AuthModule,
+  ],
   controllers: [],
   providers: [],
 })
