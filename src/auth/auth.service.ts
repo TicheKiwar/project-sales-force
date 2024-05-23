@@ -8,12 +8,12 @@ import { UserService } from 'src/modules/user/user.service';
 @Injectable()
 export class AuthService {
 
-constructor(
-    private readonly userService:UserService,
-    private readonly jwt:JwtService
-) {
-    
-}
+    constructor(
+        private readonly userService:UserService,
+        private readonly jwt:JwtService
+    ) {
+        
+    }
 
     async validateUser(username:string,password:string): Promise<any>{
         const user = await this.userService.findOneUser({username});

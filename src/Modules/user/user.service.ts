@@ -31,7 +31,6 @@ export class UserService {
   async getOne(userId: number, userEntity?: Users) {
     const user = await this.userRepository.findOne({
       where: { userId: userId },
-      
       relations: ['role'],
     });
 
@@ -51,6 +50,7 @@ export class UserService {
     if (!user) throw new NotFoundException("User does not exists");
     return user;
     }
+
   async findOneUser(data:userFineOne){
     return await this.userRepository
             .createQueryBuilder("user")
@@ -58,9 +58,6 @@ export class UserService {
             .addSelect('user.password')
             .leftJoinAndSelect('user.role', 'role')
             .getOne()
-    
-    
-    //.findOneBy({ username })
   }
 
 }

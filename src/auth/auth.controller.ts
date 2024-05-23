@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { User } from 'src/common/decorator/user.decorator';
 import { Users } from 'src/entity/Users.entity';
@@ -29,7 +30,7 @@ export class AuthController {
       data,
     };
   }
-  @Roles('user')
+  @Roles('administrador')
   @Get('profile')
   @UseGuards(JwtAuthGuard,RolesGuard)
   profile(@User() user: Users) {
@@ -38,4 +39,5 @@ export class AuthController {
       user,
     };
   }
+
 }
