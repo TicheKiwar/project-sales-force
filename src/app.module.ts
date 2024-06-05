@@ -1,8 +1,22 @@
 import { Module } from '@nestjs/common';
-import { ConnectionModule } from './interfaces/controllers/controller';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { ConnectionModule } from './app.conection';
+import { ConfigModule } from '@nestjs/config';
+import { RolesModule } from './modules/roles/roles.module';
+import { MenuModule } from './menu/infrastructure/menu.module';
 
 @Module({
-  imports: [ConnectionModule],
+  imports: [ConnectionModule,
+    ConfigModule.forRoot({
+      isGlobal:true,
+      envFilePath:'.env',
+    }),
+    ConnectionModule,
+    AuthModule,
+    UserModule,
+    RolesModule,
+  ],
   controllers: [],
   providers: [],
 })
