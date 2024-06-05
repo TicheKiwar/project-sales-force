@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException,  } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from 'src/common/decorator/roles.decorator';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from '../application/user.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -26,10 +26,10 @@ export class RolesGuard implements CanActivate {
     }
 
     // Verificar y cargar roles si no están presentes
-    if (!user.role || !user.role.role) {
+    /*if (!user.role || !user.role.role) {
       const userEntity = await this.userService.findOne(user.username);
       user.role = userEntity.role;
-    }
+    }*/
 
     return requiredRoles.includes(user.role.role);
   }

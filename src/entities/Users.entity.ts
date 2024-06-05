@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   Index,
@@ -8,10 +10,11 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Orders } from "./Orders.entity";
+import { RolesUsers } from "./RolesUsers.entity";
 import { Persons } from "./Persons.entity";
-import { Roles } from "./Roles.entity";
+import { hash } from "bcryptjs";
 
-//@Index("users_pkey", ["userId"], { unique: true })
+@Index("users_pkey", ["userId"], { unique: true })
 @Entity("users", { schema: "public" })
 export class Users {
   @PrimaryGeneratedColumn({ type: "integer", name: "user_id" })
@@ -44,11 +47,20 @@ export class Users {
   @OneToMany(() => Orders, (orders) => orders.employee)
   orders: Orders[];
 
+  @OneToMany(() => RolesUsers, (rolesUsers) => rolesUsers.user)
+  rolesUsers: RolesUsers[];
+
   @ManyToOne(() => Persons, (persons) => persons.users)
   @JoinColumn([{ name: "person_id", referencedColumnName: "personId" }])
   person: Persons;
 
-  @ManyToOne(() => Roles, (roles) => roles.users)
-  @JoinColumn([{ name: "role", referencedColumnName: "roleId" }])
-  role: Roles;
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (!this.password) {
+      return;
+    }
+    this.password = await hash(this.password,10);
+  }
+
 }

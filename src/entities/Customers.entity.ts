@@ -10,7 +10,7 @@ import {
 import { Persons } from "./Persons.entity";
 import { Orders } from "./Orders.entity";
 
-//@Index("customers_pkey", ["customerId"], { unique: true })
+@Index("customers_pkey", ["customerId"], { unique: true })
 @Entity("customers", { schema: "public" })
 export class Customers {
   @PrimaryGeneratedColumn({ type: "integer", name: "customer_id" })
@@ -25,7 +25,10 @@ export class Customers {
   @Column("character", { name: "phone_number", length: 10 })
   phoneNumber: string;
 
-  @Column("timestamp without time zone", { name: "register_date" })
+  @Column("timestamp without time zone", {
+    name: "register_date",
+    default: () => "now()",
+  })
   registerDate: Date;
 
   @Column("enum", { name: "customer_status", enum: ["prospecto", "cliente"] })
@@ -48,6 +51,6 @@ export class Customers {
   @JoinColumn([{ name: "person_id", referencedColumnName: "personId" }])
   person: Persons;
 
-  @OneToMany(() => Orders, (orders) => orders.client)
+  @OneToMany(() => Orders, (orders) => orders.customer)
   orders: Orders[];
 }

@@ -1,7 +1,6 @@
 
 import { IsBoolean, IsDate, IsEmail, IsInt, IsOptional, IsString, Length, MaxLength } from "class-validator";
-import { Orders } from "src/entity/Orders.entity";
-import { Roles } from "src/entity/Roles.entity";
+import { Orders } from "src/entities/Orders.entity";
 
 export class CreateUserDto {
   @IsInt()
@@ -29,6 +28,6 @@ export class CreateUserDto {
 
   orders: Orders[];
 
-  role: Roles;
+
 
 }

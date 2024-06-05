@@ -11,7 +11,7 @@ import { Customers } from "./Customers.entity";
 import { Users } from "./Users.entity";
 import { OrdersDetails } from "./OrdersDetails.entity";
 
-//@Index("orders_pkey", ["orderId"], { unique: true })
+@Index("orders_pkey", ["orderId"], { unique: true })
 @Entity("orders", { schema: "public" })
 export class Orders {
   @PrimaryGeneratedColumn({ type: "integer", name: "order_id" })
@@ -31,8 +31,8 @@ export class Orders {
   canceledStatus: boolean | null;
 
   @ManyToOne(() => Customers, (customers) => customers.orders)
-  @JoinColumn([{ name: "client_id", referencedColumnName: "customerId" }])
-  client: Customers;
+  @JoinColumn([{ name: "customer_id", referencedColumnName: "customerId" }])
+  customer: Customers;
 
   @ManyToOne(() => Users, (users) => users.orders)
   @JoinColumn([{ name: "employee_id", referencedColumnName: "userId" }])

@@ -1,14 +1,10 @@
 import {  Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from '../../Modules/user/dto/create-user.dto';
+import { UpdateUserDto } from '../../Modules/user/dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Users } from 'src/entity/Users.entity';
-
-export interface userFineOne{
-  id?:number,
-  username?:string
-}
+import { Users } from 'src/entities/Users.entity';
+import { Credentials } from '../domain/credentials.auth';
 
 @Injectable()
 export class UserService {
@@ -24,14 +20,13 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.userRepository.find({ relations: ['role'] });
+    return await this.userRepository.find();
 
   }
 
   async getOne(userId: number, userEntity?: Users) {
     const user = await this.userRepository.findOne({
       where: { userId: userId },
-      relations: ['role'],
     });
 
     if (!user || (userEntity && userEntity.userId !== user.userId)) {
@@ -45,18 +40,16 @@ export class UserService {
     const user = 
     await this.userRepository.findOne({
       where: { username },
-      relations: ['role'],
     });
     if (!user) throw new NotFoundException("User does not exists");
     return user;
     }
 
-  async findOneUser(data:userFineOne){
+  async findOneUser(username:string,password:string){
     return await this.userRepository
             .createQueryBuilder("user")
-            .where({username:data.username})
+            .where({username:username})
             .addSelect('user.password')
-            .leftJoinAndSelect('user.role', 'role')
             .getOne()
   }
 

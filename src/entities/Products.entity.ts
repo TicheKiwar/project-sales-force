@@ -10,7 +10,7 @@ import {
 import { OrdersDetails } from "./OrdersDetails.entity";
 import { Categories } from "./Categories.entity";
 
-//@Index("products_pkey", ["productId"], { unique: true })
+@Index("products_pkey", ["productId"], { unique: true })
 @Entity("products", { schema: "public" })
 export class Products {
   @PrimaryGeneratedColumn({ type: "integer", name: "product_id" })

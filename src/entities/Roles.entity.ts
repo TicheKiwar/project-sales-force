@@ -5,9 +5,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from "./Users.entity";
+import { MenusRoles } from "./MenusRoles.entity";
+import { RolesUsers } from "./RolesUsers.entity";
 
-//@Index("roles_pkey", ["roleId"], { unique: true })
+@Index("roles_pkey", ["roleId"], { unique: true })
 @Entity("roles", { schema: "public" })
 export class Roles {
   @PrimaryGeneratedColumn({ type: "integer", name: "role_id" })
@@ -22,6 +23,9 @@ export class Roles {
   @Column("text", { name: "description", nullable: true })
   description: string | null;
 
-  @OneToMany(() => Users, (users) => users.role)
-  users: Users[];
+  @OneToMany(() => MenusRoles, (menusRoles) => menusRoles.role)
+  menusRoles: MenusRoles[];
+
+  @OneToMany(() => RolesUsers, (rolesUsers) => rolesUsers.role)
+  rolesUsers: RolesUsers[];
 }

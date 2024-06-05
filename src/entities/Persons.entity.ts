@@ -8,7 +8,7 @@ import {
 import { Customers } from "./Customers.entity";
 import { Users } from "./Users.entity";
 
-//@Index("persons_pkey", ["personId"], { unique: true })
+@Index("persons_pkey", ["personId"], { unique: true })
 @Entity("persons", { schema: "public" })
 export class Persons {
   @PrimaryGeneratedColumn({ type: "integer", name: "person_id" })

@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { Products } from "./Products.entity";
 
-//@Index("categories_pkey", ["categoryId"], { unique: true })
+@Index("categories_pkey", ["categoryId"], { unique: true })
 @Entity("categories", { schema: "public" })
 export class Categories {
   @PrimaryGeneratedColumn({ type: "integer", name: "category_id" })

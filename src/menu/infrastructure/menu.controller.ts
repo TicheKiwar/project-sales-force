@@ -7,8 +7,8 @@ import { RolesGuard } from 'src/auth/guards/role-auth.guard';
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
-  @Get()
   
+  @Get()
   @UseGuards(JwtAuthGuard,RolesGuard)
   getMenu(@Query('roleId') roleId: string) {
     const roleIdNumber = parseInt(roleId, 10);
