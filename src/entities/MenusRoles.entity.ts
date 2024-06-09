@@ -3,10 +3,12 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Menus } from "./Menus.entity";
 import { Roles } from "./Roles.entity";
+import { PermissionsMenus } from "./PermissionsMenus.entity";
 
 @Index("role_permission_pkey", ["rolePermissionId"], { unique: true })
 @Entity("menus_roles", { schema: "public" })
@@ -21,4 +23,10 @@ export class MenusRoles {
   @ManyToOne(() => Roles, (roles) => roles.menusRoles)
   @JoinColumn([{ name: "role_id", referencedColumnName: "roleId" }])
   role: Roles;
+
+  @OneToMany(
+    () => PermissionsMenus,
+    (permissionsMenus) => permissionsMenus.menusRoles
+  )
+  permissionsMenus: PermissionsMenus[];
 }

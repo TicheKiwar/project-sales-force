@@ -10,6 +10,7 @@ import { JwtStrategy } from './infrastructure/jwt.strategy';
 
 @Module({
   imports: [
+    UserModule,
     PassportModule.register({
       defaultStrategy:'jwt'
     }),
@@ -20,10 +21,11 @@ import { JwtStrategy } from './infrastructure/jwt.strategy';
         signOptions: { expiresIn: '60m' },
       }),
     }),
-    UserModule,
   ],
-  providers: [AuthService, LocalStrategy,JwtStrategy],
-
+  providers: [AuthService, LocalStrategy,JwtStrategy,],
   controllers: [AuthController],
+  exports:[AuthService]
 })
+
+
 export class AuthModule {}

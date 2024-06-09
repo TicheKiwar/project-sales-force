@@ -6,7 +6,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { MenusRoles } from "./MenusRoles.entity";
-import { PermissionsMenus } from "./PermissionsMenus.entity";
 
 @Index("permissions_pkey", ["menuId"], { unique: true })
 @Entity("menus", { schema: "public" })
@@ -19,10 +18,4 @@ export class Menus {
 
   @OneToMany(() => MenusRoles, (menusRoles) => menusRoles.menu)
   menusRoles: MenusRoles[];
-
-  @OneToMany(
-    () => PermissionsMenus,
-    (permissionsMenus) => permissionsMenus.menu
-  )
-  permissionsMenus: PermissionsMenus[];
 }

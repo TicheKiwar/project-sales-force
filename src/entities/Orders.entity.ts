@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Customers } from "./Customers.entity";
-import { Users } from "./Users.entity";
 import { OrdersDetails } from "./OrdersDetails.entity";
+import { Users } from "./Users.entity";
 
 @Index("orders_pkey", ["orderId"], { unique: true })
 @Entity("orders", { schema: "public" })

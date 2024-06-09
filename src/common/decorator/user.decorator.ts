@@ -1,10 +1,9 @@
-import { applyDecorators, createParamDecorator, ExecutionContext, UseGuards } from '@nestjs/common';
-
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { Users } from 'src/entities/Users.entity';
 
 export const User = createParamDecorator(
-  (data: string, ctx: ExecutionContext) => {
+  (data: unknown, ctx: ExecutionContext): Users => {
     const request = ctx.switchToHttp().getRequest();
-    const user = request.user;
-    return data ? user && user[data] : user;
+    return request.user;
   },
 );

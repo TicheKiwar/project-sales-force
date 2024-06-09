@@ -1,6 +1,4 @@
 import {
-  BeforeInsert,
-  BeforeUpdate,
   Column,
   Entity,
   Index,
@@ -12,7 +10,6 @@ import {
 import { Orders } from "./Orders.entity";
 import { RolesUsers } from "./RolesUsers.entity";
 import { Persons } from "./Persons.entity";
-import { hash } from "bcryptjs";
 
 @Index("users_pkey", ["userId"], { unique: true })
 @Entity("users", { schema: "public" })
@@ -53,14 +50,4 @@ export class Users {
   @ManyToOne(() => Persons, (persons) => persons.users)
   @JoinColumn([{ name: "person_id", referencedColumnName: "personId" }])
   person: Persons;
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPassword() {
-    if (!this.password) {
-      return;
-    }
-    this.password = await hash(this.password,10);
-  }
-
 }
